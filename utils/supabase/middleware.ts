@@ -43,6 +43,15 @@ export async function updateSession(request: NextRequest) {
     const isPublicRoute =
         request.nextUrl.pathname.startsWith('/login') ||
         request.nextUrl.pathname.startsWith('/auth') ||
+        request.nextUrl.pathname.startsWith('/api') ||
+        request.nextUrl.pathname.startsWith('/research') ||
+        request.nextUrl.pathname.startsWith('/exams') ||
+        request.nextUrl.pathname.startsWith('/simulator') ||
+        request.nextUrl.pathname.startsWith('/colleges') ||
+        request.nextUrl.pathname.startsWith('/calculator') ||
+        request.nextUrl.pathname.startsWith('/quiz') ||
+        request.nextUrl.pathname.startsWith('/guidance') ||
+        request.nextUrl.pathname.startsWith('/timeline') ||
         request.nextUrl.pathname === '/';
 
     if (!user && !isPublicRoute) {
