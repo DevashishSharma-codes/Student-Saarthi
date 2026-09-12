@@ -12,7 +12,7 @@ import {
   MicOff,
   Volume2,
   Loader2,
-  Sparkles,
+  Search,
   Compass,
   ArrowRight,
   TrendingUp,
@@ -225,7 +225,7 @@ function GuidanceContent() {
       <div className="mx-auto max-w-4xl px-4 pt-32 pb-20">
         <div className="text-center max-w-2xl mx-auto mb-10 space-y-3">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/10 text-primary text-xs font-semibold tracking-wide uppercase shadow-sm">
-            <Sparkles className="h-3.5 w-3.5 text-primary" />
+            <BrainCircuit className="h-3.5 w-3.5 text-primary" />
             AI Career Counseling & Guidance
           </div>
           <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight">
@@ -311,7 +311,7 @@ function GuidanceContent() {
                   </>
                 ) : (
                   <>
-                    <Sparkles className="h-4 w-4 mr-2" />
+                    <BrainCircuit className="h-4 w-4 mr-2" />
                     Generate AI Guidance
                   </>
                 )}
@@ -474,7 +474,7 @@ function GuidanceContent() {
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
                 <Link href={`/research?query=${encodeURIComponent(result.stream + " career outlook 2026 cutoffs and salaries")}`}>
                   <Button variant="outline" className="w-full text-xs rounded-xl justify-start h-11 border-primary/30 hover:bg-primary/10">
-                    <Sparkles className="h-4 w-4 mr-2 text-primary" /> Deep AI Research
+                    <Search className="h-4 w-4 mr-2 text-primary" /> Deep AI Research
                   </Button>
                 </Link>
                 <Link href="/simulator">

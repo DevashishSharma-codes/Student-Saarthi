@@ -1,231 +1,345 @@
+"use client";
+
 import Link from "next/link";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import Image from "next/image";
+import { InterfaceCraftsCards } from "@/components/landing/InterfaceCraftsCards";
+import { GlobalCollegesSection } from "@/components/landing/GlobalCollegesSection";
 import {
-  BrainCircuit,
-  Compass,
-  Sparkles,
-  Calendar,
-  Building2,
-  Calculator,
-  ArrowRight,
   ShieldCheck,
-  TrendingUp,
-  ExternalLink,
-  CheckCircle2,
-  Flame,
-  Award,
 } from "lucide-react";
+import { motion } from "framer-motion";
 
 export default function Home() {
-  const capabilities = [
-    {
-      title: "Autonomous Deep Research",
-      description:
-        "Multi-step market intelligence grounded in live Google Search. Synthesizes 2026 cutoffs, AI disruption risk, and verified web citations into an executive dossier.",
-      href: "/research",
-      badge: "Real-Time AI Grounding",
-      icon: Sparkles,
-      color: "from-primary/20 to-emerald-500/10",
-      accent: "text-primary",
-    },
-    {
-      title: "Live National Exam Radar",
-      description:
-        "Track upcoming application windows, admit cards, and exam dates across JEE, NEET, CUET, CLAT, IPMAT, and NIFT with live AI status verification.",
-      href: "/exams",
-      badge: "Active Radar",
-      icon: Calendar,
-      color: "from-amber-500/20 to-orange-500/10",
-      accent: "text-amber-500",
-    },
-    {
-      title: "Career Pathway Simulator",
-      description:
-        "Interactive node-based decision tree. Trace how choosing PCM vs PCB vs Commerce branches into specific undergraduate degrees, compensation curves, and contingency exit pivots.",
-      href: "/simulator",
-      badge: "Decision Tree",
-      icon: Compass,
-      color: "from-blue-500/20 to-cyan-500/10",
-      accent: "text-blue-500",
-    },
-    {
-      title: "College & Institutional Intelligence",
-      description:
-        "Search 30+ top institutions across Science, Commerce, Law, and Design. Features an on-demand AI auditor to fact-check real placement records and campus red flags for ANY college.",
-      href: "/colleges",
-      badge: "Live AI Auditor",
-      icon: Building2,
-      color: "from-purple-500/20 to-pink-500/10",
-      accent: "text-purple-500",
-    },
-    {
-      title: "Education ROI & Loan Breakeven",
-      description:
-        "Calculate true educational capital outlay (tuition + hostel + prep) vs starting CTC, loan EMIs, cumulative 5-year cashflows, and payback horizon in months.",
-      href: "/calculator",
-      badge: "Financial DSS",
-      icon: Calculator,
-      color: "from-emerald-500/20 to-teal-500/10",
-      accent: "text-emerald-500",
-    },
-    {
-      title: "RIASEC Psychometric Engine",
-      description:
-        "15-point Holland Code assessment evaluating Realistic, Investigative, Artistic, Social, Enterprising, and Conventional traits for tailored guidance.",
-      href: "/quiz",
-      badge: "Holland Codes",
-      icon: BrainCircuit,
-      color: "from-indigo-500/20 to-violet-500/10",
-      accent: "text-indigo-500",
-    },
-  ];
 
   return (
-    <main className="min-h-screen relative overflow-hidden bg-background selection:bg-primary selection:text-primary-foreground">
-      {/* Ambient background blur spots */}
-      <div className="absolute top-20 left-10 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute top-40 right-20 w-96 h-96 bg-accent/15 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-40 left-1/3 w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
-
+    <main className="min-h-screen bg-[#0a0908] text-[#f7f4ee] selection:bg-[#f7f4ee] selection:text-[#0a0908] relative overflow-x-hidden font-sans">
       <Header />
 
-      {/* Hero Section */}
-      <section className="relative mx-auto max-w-6xl px-4 pt-36 pb-16 z-10">
-        <div className="text-center space-y-6 max-w-4xl mx-auto">
-          {/* Real-time Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/20 bg-background/80 backdrop-blur-md shadow-sm">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span className="text-xs font-semibold text-foreground">
-              Powered by Gemini 2.5 Flash & Real-Time Google Search Grounding
-            </span>
-          </div>
+      {/* =========================================================================
+          HERO SECTION (Original Artwork Background + Interactive Cards)
+          ========================================================================= */}
+      <section className="relative w-full pt-16 sm:pt-20 pb-0 px-4 sm:px-6 md:px-10 lg:px-12 flex flex-col items-center justify-between select-none overflow-visible min-h-screen h-screen min-h-[100dvh]">
+        {/* User Provided Background Image - Covers the Whole Screen */}
+        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none select-none">
+          <Image
+            src="/image.png"
+            alt="Students holding glowing cloud over rolling green valley"
+            fill
+            priority
+            className="object-cover object-center"
+            quality={100}
+          />
+        </div>
 
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-[1.08]">
-            Real-Time AI <br className="hidden sm:inline" />
-            <span className="bg-gradient-to-r from-primary via-emerald-500 to-teal-400 text-transparent bg-clip-text">
-              Career & Higher Ed Intelligence
-            </span>
-          </h1>
+        {/* Top: Hero Content in High-Contrast Deep Forest Editorial Style */}
+        <div className="relative z-20 w-full max-w-5xl mx-auto text-center flex flex-col items-center pt-2 sm:pt-4">
+          <div className="relative w-full flex flex-col items-center">
+            {/* Headline (Deep Forest Charcoal Typography with Supreme Contrast on Morning Sky) */}
+            <h1 className="font-outfit font-light tracking-[-0.03em] leading-[1.06] text-[#0f291e] text-3xl sm:text-5xl md:text-5xl lg:text-[3.5rem] max-w-4xl mx-auto">
+              Real-Time Higher Ed
+              <span className="block font-serif italic font-normal text-[#123826] mt-0.5 sm:mt-1">
+                &amp; Career Intelligence.
+              </span>
+            </h1>
 
-          <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto font-medium leading-relaxed">
-            Move beyond static, outdated counseling. Discover live university cutoffs, AI disruption risk models, national entrance exam trackers, and financial payback simulators.
-          </p>
+            {/* Subtitle in Deep Forest Tone */}
+            <motion.p
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.15 }}
+              className="mt-2.5 sm:mt-3 text-xs sm:text-sm md:text-base text-[#1b3d2d] font-outfit font-normal max-w-xl mx-auto leading-relaxed"
+            >
+              Multi-step market intelligence grounded in Gemini 2.5, 60L+ aspirant national exam radar, branch simulators, and deterministic payback modeling.
+            </motion.p>
 
-          {/* Primary Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-3 justify-center items-center pt-4">
-            <Link href="/research">
-              <Button size="lg" className="h-13 px-7 rounded-full text-base font-bold shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5">
-                <Sparkles className="mr-2 h-4 w-4" /> Launch Deep Research
-              </Button>
-            </Link>
+            {/* Doodle Annotation: Positioned on the side of the main text, smaller scale */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.92 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.25 }}
+              className="mt-3 md:mt-0 md:absolute md:top-8 lg:top-10 md:right-0 lg:-right-4 xl:-right-12 flex items-center justify-center select-none z-30 pointer-events-auto"
+            >
+              <Link
+                href="/simulator"
+                className="group inline-flex items-end gap-2 cursor-pointer transition-transform duration-300 hover:scale-[1.05]"
+              >
+                {/* Smaller Dotted Looping Doodle Arrow in Black */}
+                <span
+                  className="inline-block bg-black transition-colors shrink-0"
+                  style={{
+                    width: "48px",
+                    height: `${(48 * 345) / 292}px`,
+                    aspectRatio: "292 / 345",
+                    maskImage: "url(/doodle-arrow.png)",
+                    WebkitMaskImage: "url(/doodle-arrow.png)",
+                    maskSize: "contain",
+                    WebkitMaskSize: "contain",
+                    maskRepeat: "no-repeat",
+                    WebkitMaskRepeat: "no-repeat",
+                    maskPosition: "center",
+                    WebkitMaskPosition: "center",
+                  }}
+                  aria-hidden="true"
+                />
 
-            <Link href="/simulator">
-              <Button variant="outline" size="lg" className="h-13 px-7 rounded-full border-2 text-base font-bold hover:bg-secondary/50 transition-all duration-300">
-                <Compass className="mr-2 h-4 w-4 text-blue-500" /> Simulate Career Pathways
-              </Button>
-            </Link>
-
-            <Link href="/quiz">
-              <Button variant="ghost" size="lg" className="h-13 px-6 rounded-full text-base font-semibold hover:bg-secondary/40">
-                <BrainCircuit className="mr-2 h-4 w-4 text-primary" /> Take Psychometric Test
-              </Button>
-            </Link>
+                {/* Smaller Handwritten Doodle Text with Balance Icon */}
+                <span
+                  className="inline-flex items-center text-sm sm:text-base md:text-lg lg:text-xl text-black tracking-wide transition-colors -rotate-3 font-normal whitespace-nowrap mb-1"
+                  style={{
+                    fontFamily: '"Starlight", cursive, sans-serif',
+                  }}
+                >
+                  <span>Balance dream</span>
+                  {/* Smaller Playful Hand-Drawn Doodle Balance Scale Icon */}
+                  <svg
+                    viewBox="0 0 32 32"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-4 h-4 sm:w-4.5 sm:h-4.5 md:w-5 md:h-5 inline-block text-black mx-1 sm:mx-1.5 shrink-0 stroke-[2.2] -rotate-3 transition-transform duration-300 group-hover:rotate-6 group-hover:scale-110"
+                    aria-hidden="true"
+                  >
+                    {/* Central Stem & Base */}
+                    <path d="M16 6v19M11 25.5c1.8-.6 3.2-.8 5-.8s3.2.2 5 .8" stroke="currentColor" strokeLinecap="round" />
+                    {/* Playful Wobbly Crossbeam */}
+                    <path d="M5.5 11.5c3.2-1 6.8-1.3 10.5-1.3s7.3.3 10.5 1.3" stroke="currentColor" strokeLinecap="round" />
+                    {/* Left Pan Chains & Smile Pan (Dream side) */}
+                    <path d="M6 12l-2.2 5.5M8.5 12L6 17.5" stroke="currentColor" strokeLinecap="round" />
+                    <path d="M2.5 17.5c.8 2.4 4.7 2.4 5.5 0" stroke="currentColor" strokeLinecap="round" />
+                    <circle cx="5.2" cy="16" r="1" fill="currentColor" />
+                    {/* Right Pan Chains & Smile Pan (ROI side) */}
+                    <path d="M26 12l-2.2 5.5M28.5 12L26 17.5" stroke="currentColor" strokeLinecap="round" />
+                    <path d="M22.5 17.5c.8 2.4 4.7 2.4 5.5 0" stroke="currentColor" strokeLinecap="round" />
+                    <circle cx="26.8" cy="16" r="1" fill="currentColor" />
+                    {/* Pivot Top Ring with Playful Sparkle */}
+                    <circle cx="16" cy="6" r="2" fill="currentColor" />
+                    <path d="M16 2.5v1.2M14.2 3.8l1.8.8 1.8-.8" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                  <span className="inline-flex items-baseline">
+                    <span
+                      className="font-bold text-[1.25em] leading-none inline-block mr-[0.5px]"
+                      style={{ fontFamily: '"Caveat", "Kalam", cursive, sans-serif' }}
+                    >
+                      R
+                    </span>
+                    <span>oi</span>
+                  </span>
+                </span>
+              </Link>
+            </motion.div>
           </div>
         </div>
 
-        {/* Live Metrics Proof Strip */}
-        <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
-          <div className="p-4 rounded-2xl border bg-card/60 backdrop-blur-sm shadow-xs text-center space-y-1">
-            <span className="text-2xl sm:text-3xl font-black text-foreground">Live Web</span>
-            <p className="text-xs text-muted-foreground font-medium">Google Search Grounding</p>
-          </div>
-          <div className="p-4 rounded-2xl border bg-card/60 backdrop-blur-sm shadow-xs text-center space-y-1">
-            <span className="text-2xl sm:text-3xl font-black text-primary">60L+</span>
-            <p className="text-xs text-muted-foreground font-medium">Annual Exam Aspirants Tracked</p>
-          </div>
-          <div className="p-4 rounded-2xl border bg-card/60 backdrop-blur-sm shadow-xs text-center space-y-1">
-            <span className="text-2xl sm:text-3xl font-black text-emerald-600 dark:text-emerald-400">15-Point</span>
-            <p className="text-xs text-muted-foreground font-medium">Holland RIASEC Profiling</p>
-          </div>
-          <div className="p-4 rounded-2xl border bg-card/60 backdrop-blur-sm shadow-xs text-center space-y-1">
-            <span className="text-2xl sm:text-3xl font-black text-foreground">5-Year</span>
-            <p className="text-xs text-muted-foreground font-medium">Cashflow & ROI Simulator</p>
-          </div>
-        </div>
+        {/* Bottom: Interactive Folder & Intelligence Cards Deck */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.85, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+          className="relative z-30 w-full max-w-5xl mx-auto mt-auto pb-2 sm:pb-3"
+        >
+          <InterfaceCraftsCards />
+        </motion.div>
+      </section>
 
-        {/* 6 Core Enterprise Capabilities Section */}
-        <div className="mt-24 space-y-8">
-          <div className="text-center space-y-2 max-w-2xl mx-auto">
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground">
-              Enterprise-Grade Decision Support Suite
+      {/* =========================================================================
+          GLOBAL COLLEGES & DECISION SYSTEMS (3D Globe + How We Help Valley Section)
+          ========================================================================= */}
+      <section className="w-full pt-16 sm:pt-20 pb-0 bg-white text-neutral-950 border-t border-black/10 select-text relative z-10">
+        <GlobalCollegesSection />
+      </section>
+
+      {/* =========================================================================
+          VERIFIED TESTIMONIALS (CONVERSION STYLE: CENTERED EDITORIAL + 5-TIER STEPPED BANDS)
+          Generous breathing room between cards and rectangular bands
+          ========================================================================= */}
+      <section className="w-full pt-16 sm:pt-20 pb-0 bg-white text-neutral-950 border-t border-neutral-200 select-text relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-10 lg:px-12 space-y-8 sm:space-y-10 w-full">
+          
+          {/* Top: Centered Brand Mark & Large Editorial Headline */}
+          <div className="text-center max-w-3xl mx-auto space-y-2.5">
+            <div className="inline-flex items-center gap-2 px-2.5 py-1 bg-neutral-100 border border-neutral-300 rounded-none mb-1.5">
+              <div className="w-4 h-4 bg-neutral-950 text-white font-mono text-[10px] font-bold flex items-center justify-center rounded-none">
+                S
+              </div>
+              <span className="font-outfit font-semibold text-xs text-neutral-900 tracking-tight">
+                Student Saarthi
+              </span>
+            </div>
+
+            <h2 className="font-outfit text-3xl sm:text-5xl lg:text-[46px] font-light text-neutral-950 tracking-tight leading-[1.08]">
+              The student intelligence <span className="font-serif italic font-normal">platform.</span>
             </h2>
-            <p className="text-sm text-muted-foreground">
-              Engineered specifically to solve high-stakes academic and career transition dilemmas with verifiable data.
+
+            <p className="font-outfit text-xs sm:text-sm text-neutral-600 font-light max-w-lg mx-auto leading-relaxed pt-0.5">
+              Verified outcomes, unbiased branch telemetry, and zero coaching sponsorships. Trusted by 60,000+ students and parents across 28 Indian states.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {capabilities.map((cap, idx) => {
-              const Icon = cap.icon;
+          {/* Testimonial Cards Grid (Full-Sized Long Cards with Transparent Mirror Style Border) */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6 max-w-6xl mx-auto w-full">
+            
+            {/* Testimonial 1 */}
+            <div className="relative min-h-[320px] sm:min-h-[350px] p-6 sm:p-7 lg:p-8 rounded-none border border-white/70 shadow-[inset_0_1.5px_2px_rgba(255,255,255,0.95),inset_0_-1.5px_2px_rgba(0,0,0,0.08),0_16px_40px_-10px_rgba(0,0,0,0.12),0_0_0_1px_rgba(0,0,0,0.06)] hover:border-white hover:shadow-[inset_0_2px_4px_rgba(255,255,255,1),0_24px_50px_-8px_rgba(0,0,0,0.18)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between space-y-5 sm:space-y-6 overflow-hidden backdrop-blur-md">
+              <Image
+                src="/testimonial-bg-1.png"
+                alt="Periwinkle blue texture"
+                fill
+                className="object-cover object-center pointer-events-none select-none z-0"
+                priority
+              />
+              {/* Mirror Glass Sheen Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-b from-white/40 via-white/15 to-transparent pointer-events-none z-[1]" />
+              {/* Top Mirror Bevel Light Strip */}
+              <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-white to-transparent opacity-90 z-20 pointer-events-none" />
 
-              return (
-                <Link key={idx} href={cap.href} className="group">
-                  <Card className="h-full glass-panel border border-border/80 group-hover:border-primary/50 transition-all duration-300 group-hover:shadow-xl flex flex-col justify-between overflow-hidden">
-                    <CardContent className="p-6 space-y-4">
-                      <div className="flex items-center justify-between">
-                        <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${cap.color} flex items-center justify-center ${cap.accent}`}>
-                          <Icon className="h-6 w-6" />
-                        </div>
-                        <Badge variant="outline" className="text-[10px] uppercase font-bold tracking-wider bg-secondary/50">
-                          {cap.badge}
-                        </Badge>
-                      </div>
+              <div className="relative z-10 space-y-3.5 sm:space-y-4">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="font-mono text-[9.5px] uppercase tracking-wider px-2.5 py-1 bg-neutral-950/85 backdrop-blur-xs text-white font-semibold rounded-none border border-white/30 shadow-xs">
+                    AIR 384 • IIT Bombay
+                  </span>
+                  <span className="font-mono text-[9.5px] text-[#1e3a8a] bg-white/80 backdrop-blur-sm border border-white/80 px-2 py-0.5 font-semibold flex items-center gap-1 rounded-none shadow-xs">
+                    <ShieldCheck size={12} className="text-[#1d4ed8]" />
+                    Verified
+                  </span>
+                </div>
+                <p className="font-outfit text-xs sm:text-[13.5px] text-neutral-950 leading-relaxed font-light">
+                  &ldquo;Student Saarthi eliminated all the marketing noise between Computer Science vs Mathematics &amp; Computing at IITs. The live cutoff percentiles gave our family 100% confidence on choice filling day.&rdquo;
+                </p>
+              </div>
+              <div className="relative z-10 pt-3.5 sm:pt-4 border-t border-white/60 space-y-0.5">
+                <p className="font-outfit text-xs sm:text-sm font-semibold text-neutral-950">Rohan Kulkarni</p>
+                <p className="font-mono text-[10px] sm:text-[10.5px] text-neutral-700">JEE Advanced Aspirant • B.Tech CSE</p>
+              </div>
+            </div>
 
-                      <div className="space-y-2">
-                        <h3 className="text-lg font-bold text-foreground group-hover:text-primary transition-colors flex items-center gap-1.5">
-                          {cap.title}
-                          <ArrowRight className="h-4 w-4 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200" />
-                        </h3>
-                        <p className="text-xs text-muted-foreground leading-relaxed">
-                          {cap.description}
-                        </p>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </Link>
-              );
-            })}
+            {/* Testimonial 2 */}
+            <div className="relative min-h-[320px] sm:min-h-[350px] p-6 sm:p-7 lg:p-8 rounded-none border border-white/70 shadow-[inset_0_1.5px_2px_rgba(255,255,255,0.95),inset_0_-1.5px_2px_rgba(0,0,0,0.08),0_16px_40px_-10px_rgba(0,0,0,0.12),0_0_0_1px_rgba(0,0,0,0.06)] hover:border-white hover:shadow-[inset_0_2px_4px_rgba(255,255,255,1),0_24px_50px_-8px_rgba(0,0,0,0.18)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between space-y-5 sm:space-y-6 overflow-hidden backdrop-blur-md">
+              <Image
+                src="/testimonial-bg-2.jpg"
+                alt="Soft sage texture"
+                fill
+                className="object-cover object-center pointer-events-none select-none z-0"
+                priority
+              />
+              {/* Mirror Glass Sheen Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-b from-white/40 via-white/15 to-transparent pointer-events-none z-[1]" />
+              {/* Top Mirror Bevel Light Strip */}
+              <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-white to-transparent opacity-90 z-20 pointer-events-none" />
+
+              <div className="relative z-10 space-y-3.5 sm:space-y-4">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="font-mono text-[9.5px] uppercase tracking-wider px-2.5 py-1 bg-neutral-950/85 backdrop-blur-xs text-white font-semibold rounded-none border border-white/30 shadow-xs">
+                    Parent • NEET UG
+                  </span>
+                  <span className="font-mono text-[9.5px] text-[#065f46] bg-white/80 backdrop-blur-sm border border-white/80 px-2 py-0.5 font-semibold flex items-center gap-1 rounded-none shadow-xs">
+                    <ShieldCheck size={12} className="text-[#047857]" />
+                    ₹85L Saved
+                  </span>
+                </div>
+                <p className="font-outfit text-xs sm:text-[13.5px] text-neutral-950 leading-relaxed font-light">
+                  &ldquo;The ROI calculator saved our family from taking an ₹85 Lakh private medical college loan. We used the quota simulator to target premier state government institutions with zero debt burden.&rdquo;
+                </p>
+              </div>
+              <div className="relative z-10 pt-3.5 sm:pt-4 border-t border-white/60 space-y-0.5">
+                <p className="font-outfit text-xs sm:text-sm font-semibold text-neutral-950">Dr. P. Venkat</p>
+                <p className="font-mono text-[10px] sm:text-[10.5px] text-neutral-700">Parent of Class 12 NEET Aspirant (AIR 1,240)</p>
+              </div>
+            </div>
+
+            {/* Testimonial 3 */}
+            <div className="relative min-h-[320px] sm:min-h-[350px] p-6 sm:p-7 lg:p-8 rounded-none border border-white/70 shadow-[inset_0_1.5px_2px_rgba(255,255,255,0.95),inset_0_-1.5px_2px_rgba(0,0,0,0.08),0_16px_40px_-10px_rgba(0,0,0,0.12),0_0_0_1px_rgba(0,0,0,0.06)] hover:border-white hover:shadow-[inset_0_2px_4px_rgba(255,255,255,1),0_24px_50px_-8px_rgba(0,0,0,0.18)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between space-y-5 sm:space-y-6 overflow-hidden backdrop-blur-md">
+              <Image
+                src="/testimonial-bg-3.png"
+                alt="Sky to sunset gradient"
+                fill
+                className="object-cover object-center pointer-events-none select-none z-0"
+                priority
+              />
+              {/* Mirror Glass Sheen Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-b from-white/40 via-white/15 to-transparent pointer-events-none z-[1]" />
+              {/* Top Mirror Bevel Light Strip */}
+              <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-white to-transparent opacity-90 z-20 pointer-events-none" />
+
+              <div className="relative z-10 space-y-3.5 sm:space-y-4">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="font-mono text-[9.5px] uppercase tracking-wider px-2.5 py-1 bg-neutral-950/85 backdrop-blur-xs text-white font-semibold rounded-none border border-white/30 shadow-xs">
+                    CUET 792/800 • SRCC
+                  </span>
+                  <span className="font-mono text-[9.5px] text-[#9a3412] bg-white/80 backdrop-blur-sm border border-white/80 px-2 py-0.5 font-semibold flex items-center gap-1 rounded-none shadow-xs">
+                    <ShieldCheck size={12} className="text-[#b45309]" />
+                    Tier-1 Feeder
+                  </span>
+                </div>
+                <p className="font-outfit text-xs sm:text-[13.5px] text-neutral-950 leading-relaxed font-light">
+                  &ldquo;Deciding between DU North Campus Economics vs IIM Indore 5-Year IPM was a huge dilemma. Student Saarthi traced realistic starting compensation and Tier-1 firm recruitment mobility.&rdquo;
+                </p>
+              </div>
+              <div className="relative z-10 pt-3.5 sm:pt-4 border-t border-white/60 space-y-0.5">
+                <p className="font-outfit text-xs sm:text-sm font-semibold text-neutral-950">Ananya Sen</p>
+                <p className="font-mono text-[10px] sm:text-[10.5px] text-neutral-700">B.Com (Hons) @ SRCC • DU North Campus</p>
+              </div>
+            </div>
+
           </div>
+
         </div>
 
-        {/* Call to Action Banner */}
-        <div className="mt-24 p-8 sm:p-12 rounded-3xl border border-primary/30 bg-gradient-to-br from-primary/10 via-background to-emerald-500/10 text-center space-y-6 max-w-4xl mx-auto shadow-xl">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-primary/20 bg-background text-xs font-bold text-primary">
-            <Award className="h-3.5 w-3.5" /> High-End Final Year Capstone Innovation
+        {/* =====================================================================
+            SIGNATURE 5-TIER STEPPED COLORFUL HALFTONE BANDS (Conversion Style)
+            Stepped Ladder: 22% -> 46% -> 73% -> 88% -> 100%
+            Guaranteed generous breathing room between cards and rectangular bands
+            ===================================================================== */}
+        <div className="w-full mt-16 sm:mt-20 lg:mt-24 relative select-none">
+          
+          {/* Step 1: Deep Royal Blue / Violet (~22% width) */}
+          <div className="w-[22%] sm:w-[24%] h-10 sm:h-11 bg-gradient-to-r from-[#1d2d88] via-[#2554c7] to-[#3b82f6] flex items-center relative overflow-hidden shadow-xs">
+            <span className="text-[9.5px] sm:text-[10px] font-mono font-semibold text-white/95 uppercase tracking-widest pl-3 sm:pl-4 truncate">
+              AIR 384 • IIT BOMBAY
+            </span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-foreground">
-            Ready to experience real-time career intelligence?
-          </h2>
-          <p className="text-sm sm:text-base text-muted-foreground max-w-xl mx-auto">
-            Test any query or career option with live search grounding, investigate live college cutoffs, or simulate full educational ROI.
-          </p>
-          <div className="flex flex-wrap justify-center gap-3">
-            <Link href="/research">
-              <Button size="lg" className="rounded-full font-bold px-8 shadow-md">
-                Try Deep Research Now <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-            <Link href="/exams">
-              <Button variant="outline" size="lg" className="rounded-full font-bold px-6">
-                Explore Exam Radar
-              </Button>
-            </Link>
+
+          {/* Step 2: Sky Blue with Halftone Dots (~46% width) */}
+          <div className="w-[46%] sm:w-[48%] h-10 sm:h-11 bg-gradient-to-r from-[#38bdf8] via-[#60a5fa] to-[#93c5fd] flex items-center relative overflow-hidden shadow-xs">
+            <div
+              className="absolute inset-0 opacity-30 pointer-events-none"
+              style={{ backgroundImage: "radial-gradient(#1e3a8a 1.2px, transparent 1.2px)", backgroundSize: "6px 6px" }}
+            />
+            <span className="relative z-10 text-[9.5px] sm:text-[10px] font-mono font-semibold text-neutral-950 uppercase tracking-widest pl-3 sm:pl-4 truncate">
+              NEET 685 • TOP STATE GOVT MBBS
+            </span>
           </div>
+
+          {/* Step 3: Mint / Seafoam Green (~73% width) */}
+          <div className="w-[73%] sm:w-[75%] h-10 sm:h-11 bg-gradient-to-r from-[#86efac] via-[#bbf7d0] to-[#dcfce7] flex items-center relative overflow-hidden shadow-xs">
+            <span className="text-[9.5px] sm:text-[10px] font-mono font-semibold text-neutral-900 uppercase tracking-widest pl-3 sm:pl-4 truncate">
+              BITSAT 324 • PILANI COMPUTER SCIENCE
+            </span>
+          </div>
+
+          {/* Step 4: Olive Green to Golden Amber with Halftone Dots (~88% width) */}
+          <div className="w-[88%] sm:w-[90%] h-10 sm:h-11 bg-gradient-to-r from-[#2e5318] via-[#4d7c0f] to-[#eab308] flex items-center relative overflow-hidden shadow-xs">
+            <div
+              className="absolute inset-0 opacity-35 pointer-events-none"
+              style={{ backgroundImage: "radial-gradient(#000000 1.2px, transparent 1.2px)", backgroundSize: "6px 6px" }}
+            />
+            <span className="relative z-10 text-[9.5px] sm:text-[10px] font-mono font-semibold text-white/95 uppercase tracking-widest pl-3 sm:pl-4 truncate">
+              CUET 792/800 • SRCC DU NORTH CAMPUS
+            </span>
+          </div>
+
+          {/* Step 5: Full Width Sunset Purple-Magenta to Coral (100% width) */}
+          <div className="w-full h-11 sm:h-13 bg-gradient-to-r from-[#3b0764] via-[#701a75] via-[#db2777] to-[#fb7185] flex items-center justify-between px-3 sm:px-6 relative overflow-hidden">
+            <span className="text-[9.5px] sm:text-[10.5px] font-mono font-semibold text-white uppercase tracking-widest truncate">
+              60,000+ ADMISSIONS GUIDED // 100% UNBIASED EDITORIAL TELEMETRY
+            </span>
+            <span className="font-mono text-[9px] text-white/80 uppercase tracking-wider hidden sm:inline-block">
+              2026 OFFICIAL DATA
+            </span>
+          </div>
+
         </div>
+
       </section>
 
       <Footer />

@@ -1,21 +1,17 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { Header } from "@/components/site/Header";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
+import { Footer } from "@/components/site/Footer";
 import { useRouter } from "next/navigation";
 import {
   BrainCircuit,
-  Sparkles,
+  Compass,
   ArrowRight,
   ArrowLeft,
-  CheckCircle2,
   Loader2,
-  Compass,
+  CheckCircle2,
 } from "lucide-react";
 
 export interface RiasecQuestion {
@@ -25,16 +21,15 @@ export interface RiasecQuestion {
   context: string;
   options: {
     label: string;
-    score: number; // 1 to 4
+    score: number;
   }[];
 }
 
 const RIASEC_QUESTIONS: RiasecQuestion[] = [
-  // Investigative (Analytical & Scientific)
   {
     id: 1,
     dimension: "Investigative",
-    question: "When you encounter a complex puzzle or a difficult math problem, how do you typically react?",
+    question: "When you encounter a complex puzzle or difficult math problem, how do you react?",
     context: "Cognitive Problem-Solving Tendency",
     options: [
       { label: "I am deeply energized and will spend hours dissecting the underlying logic until I solve it.", score: 4 },
@@ -58,7 +53,7 @@ const RIASEC_QUESTIONS: RiasecQuestion[] = [
   {
     id: 3,
     dimension: "Investigative",
-    question: "How do you approach forming opinions on controversial global or technological matters?",
+    question: "How do you approach forming opinions on controversial technological matters?",
     context: "Epistemological & Data-driven Bias",
     options: [
       { label: "I hunt for raw empirical research papers, statistics, and verifiable benchmarks.", score: 4 },
@@ -67,8 +62,6 @@ const RIASEC_QUESTIONS: RiasecQuestion[] = [
       { label: "I rely on gut intuition, aesthetic resonance, and creative possibilities.", score: 1 },
     ],
   },
-
-  // Realistic (Technical, Systems & Hands-on)
   {
     id: 4,
     dimension: "Realistic",
@@ -87,24 +80,22 @@ const RIASEC_QUESTIONS: RiasecQuestion[] = [
     question: "How do you prefer to interact with technology and machinery?",
     context: "Tactile vs Abstract Affinity",
     options: [
-      { label: "I want to dismantle the hardware, understand the mechanics, and solder or engineer it.", score: 4 },
+      { label: "I want to dismantle hardware, understand mechanics, and solder or engineer it.", score: 4 },
       { label: "I want to write algorithmic logic and abstract software systems.", score: 3 },
-      { label: "I want to pitch and sell the tech product to enterprise clients.", score: 2 },
-      { label: "I care primarily about how intuitive the user interface and visuals feel.", score: 1 },
+      { label: "I want to pitch and sell tech products to enterprise clients.", score: 2 },
+      { label: "I care primarily about intuitive user interface and visuals.", score: 1 },
     ],
   },
-
-  // Artistic (Creative, Design & Expression)
   {
     id: 6,
     dimension: "Artistic",
-    question: "When evaluating a newly launched website, smartphone, or building, what catches your eye first?",
+    question: "When evaluating a newly launched website or physical product, what catches your eye first?",
     context: "Sensory & Aesthetic Acuity",
     options: [
-      { label: "The visual harmony, color psychology, typography, and emotional resonance.", score: 4 },
-      { label: "The underlying tech stack, speed, and algorithmic elegance.", score: 2 },
-      { label: "The monetization strategy, price point, and market dominance.", score: 3 },
-      { label: "How accessible and welcoming it is for diverse everyday users.", score: 1 },
+      { label: "Visual harmony, color psychology, typography, and emotional resonance.", score: 4 },
+      { label: "Underlying tech stack, speed, and algorithmic elegance.", score: 2 },
+      { label: "Monetization strategy, price point, and market dominance.", score: 3 },
+      { label: "How accessible and welcoming it is for everyday users.", score: 1 },
     ],
   },
   {
@@ -114,29 +105,27 @@ const RIASEC_QUESTIONS: RiasecQuestion[] = [
     context: "Expressive & Storytelling Preference",
     options: [
       { label: "The Creative Director: crafting the narrative, visual slide deck, and brand identity.", score: 4 },
-      { label: "The Analytical Engine: building the data models, graphs, and technical proof.", score: 2 },
+      { label: "The Analytical Engine: building data models, graphs, and technical proof.", score: 2 },
       { label: "The Project Lead: pitching the project, delegating tasks, and presenting on stage.", score: 3 },
       { label: "The Empath: ensuring everyone's voice is heard and resolving team friction.", score: 1 },
     ],
   },
-
-  // Enterprising (Leadership, Persuasion & Business)
   {
     id: 8,
     dimension: "Enterprising",
     question: "Suppose your school gave you a ₹10,000 grant for an extracurricular initiative. What is your impulse?",
     context: "Entrepreneurial & Commercial Instinct",
     options: [
-      { label: "Launch a micro-business or pop-up venture to generate revenue and reinvest the profits.", score: 4 },
+      { label: "Launch a micro-business or venture to generate revenue and reinvest the profits.", score: 4 },
       { label: "Purchase high-end sensors and books to run scientific experiments.", score: 1 },
       { label: "Organize a charitable fundraising drive for a local NGO or shelter.", score: 2 },
-      { label: "Produce an independent short film, zine, or art exhibition.", score: 3 },
+      { label: "Produce an independent short film, publication, or art exhibition.", score: 3 },
     ],
   },
   {
     id: 9,
     dimension: "Enterprising",
-    question: "How comfortable are you standing before a large skeptical audience to pitch an unconventional idea?",
+    question: "How comfortable are you standing before an audience to pitch an unconventional idea?",
     context: "Persuasion & Public Presence",
     options: [
       { label: "I thrive on the adrenaline of persuasion, debate, and closing the deal.", score: 4 },
@@ -151,24 +140,22 @@ const RIASEC_QUESTIONS: RiasecQuestion[] = [
     question: "Which long-term professional status sounds most genuinely satisfying to you?",
     context: "Ambition & Impact Metric",
     options: [
-      { label: "Founder / CEO leading a fast-scaling company with hundreds of employees.", score: 4 },
+      { label: "Founder / CEO leading a fast-scaling company with hundreds of team members.", score: 4 },
       { label: "Chief Scientist / Distinguished Engineer inventing foundational breakthroughs.", score: 2 },
       { label: "Senior Corporate Lawyer or Investment Banker closing multi-million dollar deals.", score: 3 },
-      { label: "Acclaimed Author, Creative Director, or Renowned Cultural Architect.", score: 1 },
+      { label: "Acclaimed Author, Creative Director, or Cultural Architect.", score: 1 },
     ],
   },
-
-  // Social (Healthcare, Teaching, Community & Empathy)
   {
     id: 11,
     dimension: "Social",
-    question: "When a friend or classmate is struggling with severe exam stress or personal dilemmas, what is your stance?",
+    question: "When a friend is struggling with severe exam stress or personal dilemmas, what is your stance?",
     context: "Emotional Resonance & Support Drive",
     options: [
       { label: "I naturally pause my own work, listen deeply, and offer empathetic emotional support.", score: 4 },
       { label: "I immediately devise an efficient step-by-step study schedule to solve the root problem.", score: 3 },
-      { label: "I cheer them up by taking them to a creative movie, concert, or sports activity.", score: 2 },
-      { label: "I feel awkward handling high emotional volatility and prefer objective tasks.", score: 1 },
+      { label: "I cheer them up by taking them out for a creative activity or sports.", score: 2 },
+      { label: "I feel awkward handling emotional volatility and prefer objective tasks.", score: 1 },
     ],
   },
   {
@@ -178,13 +165,11 @@ const RIASEC_QUESTIONS: RiasecQuestion[] = [
     context: "Altruistic Fulfillment Horizon",
     options: [
       { label: "A doctor / clinical psychologist healing patients and saving lives daily.", score: 4 },
-      { label: "An astronautical or AI scientist expanding the frontiers of human civilization.", score: 2 },
-      { label: "A diplomat or public policy leader reforming national legal and welfare systems.", score: 3 },
+      { label: "An astronautical or AI scientist expanding human civilization frontiers.", score: 2 },
+      { label: "A diplomat or public policy leader reforming legal and welfare systems.", score: 3 },
       { label: "An artist, musician, or novelist touching millions of human hearts.", score: 1 },
     ],
   },
-
-  // Conventional (Structure, Governance & Financial Precision)
   {
     id: 13,
     dimension: "Conventional",
@@ -200,21 +185,19 @@ const RIASEC_QUESTIONS: RiasecQuestion[] = [
   {
     id: 14,
     dimension: "Conventional",
-    question: "When planning a 2-week international vacation or major project, what is your style?",
+    question: "When planning a major journey or complex project, what is your style?",
     context: "Planning Rigor vs Spontaneity",
     options: [
-      { label: "A minute-by-minute itinerary, cross-referenced budget, and pre-booked tickets.", score: 4 },
+      { label: "A minute-by-minute itinerary, cross-referenced budget, and pre-booked milestones.", score: 4 },
       { label: "A high-level milestone roadmap with room to pivot if new opportunities emerge.", score: 3 },
       { label: "Completely spontaneous: land first and figure it out based on the vibe.", score: 1 },
       { label: "Focus purely on finding hidden local culinary and artistic experiences.", score: 2 },
     ],
   },
-
-  // Synthesis & Holistic Work Environment
   {
     id: 15,
     dimension: "Investigative",
-    question: "Which of the following daily work environments would make you feel most proud at the end of the day?",
+    question: "Which daily work environment would make you feel most proud at the end of the day?",
     context: "Ideal Environmental Synergy",
     options: [
       { label: "High-tech research laboratory or high-performance software engineering desk.", score: 4 },
@@ -255,7 +238,6 @@ export default function EnhancedQuizPage() {
 
     setLoading(true);
 
-    // Calculate RIASEC dimension totals
     const scores: Record<string, number> = {
       Investigative: 0,
       Realistic: 0,
@@ -270,12 +252,10 @@ export default function EnhancedQuizPage() {
       scores[q.dimension] = (scores[q.dimension] || 0) + selectedScore;
     });
 
-    // Determine Top 2 Primary Archetypes
     const sortedDimensions = Object.entries(scores).sort((a, b) => b[1] - a[1]);
     const primaryTrait = sortedDimensions[0][0];
     const secondaryTrait = sortedDimensions[1][0];
 
-    // Summary string for AI ingestion
     const summary = `Psychometric Profile: Primary Archetype is ${primaryTrait}, Secondary Archetype is ${secondaryTrait}. Dimension Breakdown: ${JSON.stringify(
       scores
     )}.`;
@@ -299,125 +279,179 @@ export default function EnhancedQuizPage() {
   const isAnswered = answers[currentQ.id] !== undefined;
 
   return (
-    <main className="min-h-screen bg-background relative selection:bg-primary selection:text-primary-foreground">
+    <main
+      style={{
+        backgroundImage: "url('/quiz-bg.png')",
+        backgroundSize: "cover",
+        backgroundPosition: "center top",
+        backgroundAttachment: "fixed",
+        backgroundRepeat: "no-repeat",
+      }}
+      className="min-h-screen text-[#0f291e] selection:bg-[#0f291e] selection:text-white relative font-sans flex flex-col justify-between overflow-x-hidden"
+    >
+      {/* =========================================================================
+          FIXED CYAN-TEAL TEXTURED WAVE GRADIENT BACKGROUND LAYER
+          ========================================================================= */}
+      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+        <img
+          src="/quiz-bg.png"
+          alt="Aptitude Cyan-Teal Wallpaper"
+          className="w-full h-full object-cover object-top pointer-events-none select-none"
+        />
+        <div className="absolute inset-0 bg-white/[0.04] backdrop-blur-[0.5px]" />
+      </div>
+
       <Header />
 
-      <div className="mx-auto max-w-3xl px-4 pt-32 pb-16 flex flex-col items-center justify-center min-h-[85vh]">
-        <Card className="w-full glass-panel border border-border/80 shadow-2xl overflow-hidden">
-          <CardHeader className="space-y-4 bg-muted/30 border-b border-border/50 pb-6">
-            <div className="flex items-center justify-between">
-              <Badge variant="outline" className="text-xs bg-background text-primary border-primary/30">
-                <BrainCircuit className="h-3.5 w-3.5 mr-1" />
-                RIASEC Psychometric Aptitude Engine
-              </Badge>
-              <span className="text-xs font-semibold text-muted-foreground">
-                Question {currentQuestion + 1} of {RIASEC_QUESTIONS.length}
+      {/* =========================================================================
+          HERO & CONTROL SECTION
+          ========================================================================= */}
+      <section className="w-full max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-10 pt-24 sm:pt-28 pb-12 space-y-8 relative z-10">
+        
+        {/* Centered Editorial Headline Header (Clean Light Colors for High Contrast) */}
+        <div className="space-y-3 max-w-3xl mx-auto text-center flex flex-col items-center">
+          <h1 className="font-normal text-3xl sm:text-5xl lg:text-[3.5rem] text-white tracking-[-0.035em] leading-[1.08] drop-shadow-[0_3px_16px_rgba(0,0,0,0.30)] text-center">
+            Aptitude &amp; Holland Code Test
+            <span className="block font-serif italic text-emerald-100 font-normal mt-0.5 drop-shadow-[0_2px_10px_rgba(0,0,0,0.25)]">
+              15-point empirical psychometric engine.
+            </span>
+          </h1>
+
+          <p className="text-xs sm:text-sm md:text-base text-white/90 leading-relaxed font-light max-w-2xl mx-auto text-center drop-shadow-[0_1px_6px_rgba(0,0,0,0.25)]">
+            Evaluates Realistic, Investigative, Artistic, Social, Enterprising, and Conventional traits to synthesize an empirically matched academic stream.
+          </p>
+        </div>
+
+        <div className="max-w-3xl mx-auto space-y-6">
+          {/* Progress Bar in Clean Frosted Glass */}
+          <div
+            style={{
+              background: "linear-gradient(135deg, rgba(255, 255, 255, 0.88) 0%, rgba(245, 250, 252, 0.80) 100%)",
+              backdropFilter: "blur(28px) saturate(140%)",
+              WebkitBackdropFilter: "blur(28px) saturate(140%)",
+            }}
+            className="border border-white/90 rounded-none p-3.5 sm:p-4 shadow-[0_16px_40px_rgba(0,0,0,0.08),inset_0_1px_2px_rgba(255,255,255,0.95)] space-y-2.5"
+          >
+            <div className="flex items-center justify-between text-xs font-mono font-bold text-neutral-800">
+              <span className="tracking-wide">QUESTION {String(currentQuestion + 1).padStart(2, "0")} / {RIASEC_QUESTIONS.length}</span>
+              <span className="px-2.5 py-0.5 bg-white/90 border border-neutral-200/80 text-emerald-900 tracking-wider shadow-2xs">
+                DIMENSION: {currentQ.dimension.toUpperCase()}
               </span>
             </div>
-
-            <CardTitle className="text-center text-2xl md:text-3xl font-extrabold bg-gradient-to-r from-primary via-emerald-500 to-teal-400 text-transparent bg-clip-text">
-              Multi-Dimensional Career Profiler
-            </CardTitle>
-
-            <div className="w-full bg-secondary rounded-full h-2.5 overflow-hidden">
+            <div className="w-full h-1.5 bg-neutral-200/80 overflow-hidden rounded-none">
               <div
-                className="bg-primary h-2.5 rounded-full transition-all duration-500 ease-out"
+                className="h-full bg-emerald-700 transition-all duration-300"
                 style={{ width: `${progress}%` }}
               />
             </div>
-          </CardHeader>
+          </div>
 
-          <CardContent className="space-y-6 pt-6 p-6 md:p-8">
-            <div className="space-y-2">
-              <div className="flex items-center gap-2">
-                <Badge variant="secondary" className="text-[10px]">
-                  {currentQ.dimension} Axis
-                </Badge>
-                <span className="text-xs text-muted-foreground">• {currentQ.context}</span>
-              </div>
-              <h3 className="text-lg md:text-xl font-bold leading-relaxed text-foreground">
+          {/* Question Card (Clean High-Contrast Glassmorphism) */}
+          <div
+            style={{
+              background: "linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0.80) 50%, rgba(248, 252, 252, 0.88) 100%)",
+              backdropFilter: "blur(32px) saturate(140%)",
+              WebkitBackdropFilter: "blur(32px) saturate(140%)",
+              boxShadow: "inset 0 1px 2px rgba(255, 255, 255, 0.95), 0 20px 45px rgba(0, 0, 0, 0.10)",
+            }}
+            className="p-6 sm:p-9 rounded-none border border-white/90 shadow-sm space-y-6"
+          >
+            <div className="space-y-2 border-b border-black/10 pb-4">
+              <span className="font-mono text-[9px] uppercase tracking-widest text-emerald-900 font-bold bg-emerald-50 px-2.5 py-0.5 border border-emerald-200/80">
+                {currentQ.context}
+              </span>
+              <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-neutral-900 leading-snug pt-1">
                 {currentQ.question}
-              </h3>
+              </h2>
             </div>
 
-            <div className="space-y-3 pt-2">
-              {currentQ.options.map((opt, idx) => {
-                const isSelected = answers[currentQ.id] === opt.score;
-
+            {/* Options Matrix */}
+            <div className="space-y-3 pt-1">
+              {currentQ.options.map((option, idx) => {
+                const isSelected = answers[currentQ.id] === option.score;
                 return (
                   <button
                     key={idx}
-                    type="button"
-                    onClick={() => handleSelectOption(currentQ.id, opt.score)}
-                    className={`w-full text-left p-4 rounded-xl border transition-all duration-200 flex items-start gap-3.5 ${
+                    onClick={() => handleSelectOption(currentQ.id, option.score)}
+                    className={`w-full p-4 rounded-none border text-left text-xs sm:text-sm transition-all flex items-start gap-3.5 group cursor-pointer ${
                       isSelected
-                        ? "border-primary bg-primary/10 shadow-sm ring-1 ring-primary"
-                        : "border-border/70 bg-card/60 hover:bg-secondary/40 hover:border-border"
+                        ? "bg-[#0a1e16] text-white border-[#0a1e16] font-semibold shadow-xs"
+                        : "bg-white/85 hover:bg-white text-neutral-800 border-neutral-200/80 hover:border-neutral-400 shadow-2xs font-normal"
                     }`}
                   >
-                    <div
-                      className={`w-5 h-5 rounded-full border flex items-center justify-center shrink-0 mt-0.5 transition-colors ${
+                    <span
+                      className={`w-4 h-4 rounded-none border shrink-0 mt-0.5 flex items-center justify-center text-[10px] ${
                         isSelected
-                          ? "border-primary bg-primary text-primary-foreground"
-                          : "border-muted-foreground/40 bg-background"
+                          ? "border-white bg-white text-[#0a1e16] font-bold"
+                          : "border-neutral-400"
                       }`}
                     >
-                      {isSelected && <span className="w-2 h-2 rounded-full bg-background" />}
-                    </div>
-                    <span className="text-xs md:text-sm font-medium leading-relaxed text-foreground/90">
-                      {opt.label}
+                      {isSelected && "✓"}
                     </span>
+                    <span className="leading-relaxed">{option.label}</span>
                   </button>
                 );
               })}
             </div>
 
-            {/* Navigation buttons */}
-            <div className="flex items-center justify-between pt-6 border-t border-border/50">
-              <Button
-                variant="outline"
+            {/* Navigation Controls */}
+            <div className="pt-6 border-t border-black/10 flex items-center justify-between">
+              <button
                 onClick={previousQuestion}
                 disabled={currentQuestion === 0}
-                className="rounded-xl text-xs"
+                className="px-4 py-2 text-xs font-semibold border border-neutral-200/80 bg-white hover:bg-neutral-100 text-neutral-800 rounded-none transition-all disabled:opacity-30 flex items-center gap-1.5 cursor-pointer disabled:cursor-not-allowed shadow-2xs"
               >
-                <ArrowLeft className="h-3.5 w-3.5 mr-1" /> Previous
-              </Button>
+                <ArrowLeft size={13} /> Previous
+              </button>
 
-              {currentQuestion === RIASEC_QUESTIONS.length - 1 ? (
-                <Button
+              {currentQuestion < RIASEC_QUESTIONS.length - 1 ? (
+                <button
+                  onClick={nextQuestion}
+                  disabled={!isAnswered}
+                  className="px-6 py-2.5 text-xs font-semibold uppercase tracking-wider bg-[#0a1e16] hover:bg-black text-white rounded-none transition-all disabled:opacity-40 flex items-center gap-1.5 cursor-pointer disabled:cursor-not-allowed shadow-xs"
+                >
+                  Next <ArrowRight size={13} />
+                </button>
+              ) : (
+                <button
                   onClick={submitQuiz}
-                  disabled={loading || !isAnswered}
-                  className="rounded-xl text-xs px-6 font-bold shadow-md"
+                  disabled={!isAnswered || loading}
+                  className="px-6 py-2.5 text-xs font-semibold uppercase tracking-wider bg-[#0a1e16] hover:bg-black text-white rounded-none transition-all disabled:opacity-40 flex items-center gap-1.5 shadow-md cursor-pointer disabled:cursor-not-allowed"
                 >
                   {loading ? (
                     <>
-                      <Loader2 className="h-3.5 w-3.5 mr-1.5 animate-spin" />
-                      Analyzing Aptitude...
+                      <Loader2 size={13} className="animate-spin" /> Synthesizing...
                     </>
                   ) : (
                     <>
-                      <Sparkles className="h-3.5 w-3.5 mr-1.5" />
-                      Complete & Get Guidance
+                      <Compass size={13} /> Generate Blueprint
                     </>
                   )}
-                </Button>
-              ) : (
-                <Button
-                  onClick={nextQuestion}
-                  disabled={!isAnswered}
-                  className="rounded-xl text-xs px-5"
-                >
-                  Next <ArrowRight className="h-3.5 w-3.5 ml-1" />
-                </Button>
+                </button>
               )}
             </div>
+          </div>
+        </div>
+      </section>
 
-            <div className="text-[11px] text-muted-foreground text-center pt-2">
-              {Object.keys(answers).length} of {RIASEC_QUESTIONS.length} assessment prompts completed
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+      {/* Clean Minimalist Footer with Light Contrasting Text */}
+      <footer className="w-full max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-10 py-6 border-t border-white/30 bg-black/20 backdrop-blur-xl flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/90 font-medium relative z-10">
+        <div className="flex items-center gap-2">
+          <span className="font-bold text-white">Student Saarthi</span>
+          <span>•</span>
+          <span>Psychometric Aptitude &amp; Career Modeling</span>
+        </div>
+        <div className="flex items-center gap-6 text-white/90">
+          <Link href="/research" className="hover:text-white transition-colors">Deep Research</Link>
+          <Link href="/exams" className="hover:text-white transition-colors">Exam Radar</Link>
+          <Link href="/colleges" className="hover:text-white transition-colors">Colleges</Link>
+          <Link href="/simulator" className="hover:text-white transition-colors">Simulator</Link>
+          <Link href="/calculator" className="hover:text-white transition-colors">ROI Calculator</Link>
+        </div>
+        <div>
+          <span>© 2026 Student Saarthi. All rights reserved.</span>
+        </div>
+      </footer>
     </main>
   );
 }
