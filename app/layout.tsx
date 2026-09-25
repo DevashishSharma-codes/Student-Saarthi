@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
+import "lenis/dist/lenis.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Grain } from "@/components/common/Grain";
+import SmoothScroll from "@/components/providers/SmoothScroll";
 
 export const metadata: Metadata = {
   title: "Student Saarthi — Real-Time Higher Ed & Career Intelligence",
@@ -26,17 +28,19 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased font-sans bg-[#0a0908] text-[#f7f4ee] selection:bg-[#f7f4ee] selection:text-[#0a0908] relative">
-        <Grain />
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          forcedTheme="dark"
-          enableSystem={false}
-          disableTransitionOnChange
-        >
-          {children}
-          <Toaster richColors />
-        </ThemeProvider>
+        <SmoothScroll>
+          <Grain />
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            forcedTheme="dark"
+            enableSystem={false}
+            disableTransitionOnChange
+          >
+            {children}
+            <Toaster richColors />
+          </ThemeProvider>
+        </SmoothScroll>
       </body>
     </html>
   );
